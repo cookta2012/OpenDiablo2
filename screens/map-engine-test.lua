@@ -82,7 +82,7 @@ function MapEngineTest:initialize()
     self.mapRenderer.showOuterBorder = true
 
     self.btnExit = CreateButton(ButtonTypes.Short, 0, 573, "Exit", function()
-        SetScreen(Screen.MAIN_MENU)
+        SetScreen(ScreenType.MAIN_MENU)
     end)
 
     self.btnPrevious = CreateButton(ButtonTypes.Medium, 0, 0, "< Preset", function()

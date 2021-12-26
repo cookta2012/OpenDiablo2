@@ -68,7 +68,7 @@ abyss.log("info", "System language has been set to " .. languageName .. ".")
 -- Load the global objects
 ------------------------------------------------------------------------------------------------------------------------
 LoadGlobals()
-
+require ('screens/screens')
 
 ------------------------------------------------------------------------------------------------------------------------
 -- Play Startup Videos
@@ -77,7 +77,7 @@ LoadGlobals()
 function StartGame()
     abyss.setCursor(CursorSprite, 1, -24)
     abyss.showSystemCursor(true)
-    SetScreen(Screen.MAIN_MENU)
+    SetScreen(ScreenType.MAIN_MENU)
 end
 
 if abyss.getConfig("OpenDiablo2", "SkipStartupVideos") ~= "1" then

@@ -1,6 +1,5 @@
 require ('common/util')
 require ('common/ui')
-require ('screens/screens')
 
 Language = require('common/language')
 MusicDefs = require('common/enum/music')
@@ -10,6 +9,9 @@ BasePath = abyss.getConfig("#Abyss", "BasePath")
 MPQRoot = abyss.getConfig("OpenDiablo2", "MPQRoot")
 IsOnButton = false
 ShowTrademarkScreen = true
+
+--local mm = require("screens/main-menu")
+--abyss.log("info", ResourceDefs)
 
 function LoadGlobals()
     -- Load the fonts

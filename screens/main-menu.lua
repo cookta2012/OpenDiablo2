@@ -1,86 +1,97 @@
+
+
 local MainMenu = {
+    __class = "MainMenu",
+    __index = require("common/prototypes/ui"),
+    init = function(self)
+        abyss.log("info", "Hello from " .. self.__class .. " init")
+        self.prototype:init()
+        if abyss.fileExists("/data/hd/global/music/introedit_hd.flac") then
+            abyss.playBackgroundMusic("/data/hd/global/music/introedit_hd.flac")
+        else
+            abyss.playBackgroundMusic(ResourceDefs.BGMTitle)
+        end
+        self.elements.rootNode = abyss.getRootNode()
+        self:addElement("test","tes1")
+        self:getChildren()
+    end
 }
 
-function MainMenu:new()
-    local this = {}
-    setmetatable(this, self)
-    self:initialize()
-    return this
-end
-
-function MainMenu:initialize()
+--[[
+function MainMenu:init()
     if abyss.fileExists("/data/hd/global/music/introedit_hd.flac") then
         abyss.playBackgroundMusic("/data/hd/global/music/introedit_hd.flac")
     else
         abyss.playBackgroundMusic(ResourceDefs.BGMTitle)
     end
-    self.rootNode = abyss.getRootNode()
+    self.elements.rootNode = abyss.getRootNode()
+    self:addElement("test","tes1")
+    self:getChildren()
 
     -- OpenDiablo Version Label
-    self.lblVersion = abyss.createLabel(SystemFonts.FntFormal12)
-    self.lblVersion:setPosition(790, 0)
-    self.lblVersion.caption = "OpenDiablo II v0.01"
-    self.lblVersion:setAlignment("end", "middle")
+    elements.lblVersion = abyss.createLabel(SystemFonts.FntFormal12)
+    elements.lblVersion:setPosition(790, 0)
+    elements.lblVersion.caption = "OpenDiablo II v0.01"
+    elements.lblVersion:setAlignment("end", "middle")
 
     -- Disclaimer Label
-    self.lblDisclaimer = abyss.createLabel(SystemFonts.FntFormal10)
-    self.lblDisclaimer.caption = "OpenDiablo II is neither developed by, nor endorsed by Blizzard or its parent company Activision"
-    self.lblDisclaimer:setPosition(400, 580)
-    self.lblDisclaimer:setAlignment("middle", "start")
-    self.lblDisclaimer:setColorMod(0xFF, 0xFF, 0x8C)
+    elements.lblDisclaimer = abyss.createLabel(SystemFonts.FntFormal10)
+    elements.lblDisclaimer.caption = "OpenDiablo II is neither developed by, nor endorsed by Blizzard or its parent company Activision"
+    elements.lblDisclaimer:setPosition(400, 580)
+    elements.lblDisclaimer:setAlignment("middle", "start")
+    elements.lblDisclaimer:setColorMod(0xFF, 0xFF, 0x8C)
 
     -- Trademark Screen
-    self.trademarkBg = CreateUniqueSpriteFromFile(ResourceDefs.TrademarkScreen, ResourceDefs.Palette.Sky)
-    self.trademarkBg:setCellSize(4, 3)
-    self.trademarkBg:onMouseButtonDown(function(buttons)
+    elements.trademarkBg = CreateUniqueSpriteFromFile(ResourceDefs.TrademarkScreen, ResourceDefs.Palette.Sky)
+    elements.trademarkBg:setCellSize(4, 3)
+    elements.trademarkBg:onMouseButtonDown(function(buttons)
         abyss.resetMouseState();
-        self.trademarkBg.active = false
-        self.mainBg.active = true
+        elements.trademarkBg.active = false
+        elements.mainBg.active = true
         self = nil
     end)
 
     -- Main Background
-    self.mainBg = CreateUniqueSpriteFromFile(ResourceDefs.GameSelectScreen, ResourceDefs.Palette.Sky)
-    self.mainBg:setCellSize(4, 3)
-    self.mainBg.active = false
+    elements.mainBg = CreateUniqueSpriteFromFile(ResourceDefs.GameSelectScreen, ResourceDefs.Palette.Sky)
+    elements.mainBg:setCellSize(4, 3)
+    elements.mainBg.active = false
 
     -- D2 Logo Left Black BG
-    self.d2LogoLeftBlackBg = CreateUniqueSpriteFromFile(ResourceDefs.Diablo2LogoBlackLeft, ResourceDefs.Palette.Sky)
-    self.d2LogoLeftBlackBg:setPosition(400, 120)
-    self.d2LogoLeftBlackBg.bottomOrigin = true
-    self.d2LogoLeftBlackBg.playMode = "forwards"
+    elements.d2LogoLeftBlackBg = CreateUniqueSpriteFromFile(ResourceDefs.Diablo2LogoBlackLeft, ResourceDefs.Palette.Sky)
+    elements.d2LogoLeftBlackBg:setPosition(400, 120)
+    elements.d2LogoLeftBlackBg.bottomOrigin = true
+    elements.d2LogoLeftBlackBg.playMode = "forwards"
 
     -- D2 Logo Right Black BG
-    self.d2LogoRightBlackBg = CreateUniqueSpriteFromFile(ResourceDefs.Diablo2LogoBlackRight, ResourceDefs.Palette.Sky)
-    self.d2LogoRightBlackBg:setPosition(400, 120)
-    self.d2LogoRightBlackBg.bottomOrigin = true
-    self.d2LogoRightBlackBg.playMode = "forwards"
+    elements.d2LogoRightBlackBg = CreateUniqueSpriteFromFile(ResourceDefs.Diablo2LogoBlackRight, ResourceDefs.Palette.Sky)
+    elements.d2LogoRightBlackBg:setPosition(400, 120)
+    elements.d2LogoRightBlackBg.bottomOrigin = true
+    elements.d2LogoRightBlackBg.playMode = "forwards"
 
     -- D2 Logo Left
-    self.d2LogoLeft = CreateUniqueSpriteFromFile(ResourceDefs.Diablo2LogoFireLeft, ResourceDefs.Palette.Sky)
-    self.d2LogoLeft:setPosition(400, 120)
-    self.d2LogoLeft.blendMode = "additive"
-    self.d2LogoLeft.bottomOrigin = true
-    self.d2LogoLeft.playMode = "forwards"
+    elements.d2LogoLeft = CreateUniqueSpriteFromFile(ResourceDefs.Diablo2LogoFireLeft, ResourceDefs.Palette.Sky)
+    elements.d2LogoLeft:setPosition(400, 120)
+    elements.d2LogoLeft.blendMode = "additive"
+    elements.d2LogoLeft.bottomOrigin = true
+    elements.d2LogoLeft.playMode = "forwards"
 
     -- D2 Logo Right
-    self.d2LogoRight = CreateUniqueSpriteFromFile(ResourceDefs.Diablo2LogoFireRight, ResourceDefs.Palette.Sky)
-    self.d2LogoRight:setPosition(400, 120)
-    self.d2LogoRight.blendMode = "additive"
-    self.d2LogoRight.bottomOrigin = true
-    self.d2LogoRight.playMode = "forwards"
+    elements.d2LogoRight = CreateUniqueSpriteFromFile(ResourceDefs.Diablo2LogoFireRight, ResourceDefs.Palette.Sky)
+    elements.d2LogoRight:setPosition(400, 120)
+    elements.d2LogoRight.blendMode = "additive"
+    elements.d2LogoRight.bottomOrigin = true
+    elements.d2LogoRight.playMode = "forwards"
 
     -- Cinematics Window
-    self.cinematicsDialog = self:createCinematicsWindow(self)
+    elements.cinematicsDialog = self:createCinematicsWindow()
 
     -- Menu Buttons
-    self.btnSinglePlayer = CreateButton(ButtonTypes.Wide, 264, 290, "Single Player", function()
-        SetScreen(Screen.CHARACTER_SELECTION)
+    elements.btnSinglePlayer = CreateButton(ButtonTypes.Wide, 264, 290, "Single Player", function()
+        SetScreen(ScreenType.CHARACTER_SELECTION)
         -- TODO
     end)
 
-    local this = self;
-    self.btnLocalNetplay = CreateButton(ButtonTypes.Wide, 264, 330, "Local NetPlay", function()
+    elements.btnLocalNetplay = CreateButton(ButtonTypes.Wide, 264, 330, "Local NetPlay", function()
         local function output(node, offset)
             local x, y = node:getPosition()
             local line = node:nodeType() .. " X=" .. dump(x) .. " Y="..dump(y)
@@ -100,49 +111,49 @@ function MainMenu:initialize()
                 output(child, offset+1)
             end
         end
-        output(this.rootNode, 0)
+        output(elements.rootNode, 0)
         -- TODO
     end)
 
-    self.btnMapEngineDebug = CreateButton(ButtonTypes.Wide, 264, 400, "Map Engine Test", function()
-        SetScreen(Screen.MAP_ENGINE_TEST)
+    elements.btnMapEngineDebug = CreateButton(ButtonTypes.Wide, 264, 400, "Map Engine Test", function()
+        SetScreen(ScreenType.MAP_ENGINE_TEST)
     end)
 
-    self.btnCredits = CreateButton(ButtonTypes.Short, 264, 472, "Credits", function()
-        SetScreen(Screen.CREDITS)
+    elements.btnCredits = CreateButton(ButtonTypes.Short, 264, 472, "Credits", function()
+        SetScreen(ScreenType.CREDITS)
     end)
 
-    self.btnCinematics = CreateButton(ButtonTypes.Short, 401, 472, "Cinematics", function()
-        this.cinematicsDialog.show()
-        this.btnSinglePlayer.active = false
-        this.btnLocalNetplay.active = false
-        this.btnExitGame.active = false
-        this.btnCredits.active = false
-        this.btnCinematics.active = false
-        this.btnMapEngineDebug.active = false
+    elements.btnCinematics = CreateButton(ButtonTypes.Short, 401, 472, "Cinematics", function()
+        elements.cinematicsDialog.show()
+        elements.btnSinglePlayer.active = false
+        elements.btnLocalNetplay.active = false
+        elements.btnExitGame.active = false
+        elements.btnCredits.active = false
+        elements.btnCinematics.active = false
+        elements.btnMapEngineDebug.active = false
     end)
 
-    self.btnExitGame = CreateButton(ButtonTypes.Wide, 264, 500, "Exit to Desktop", function()
+    elements.btnExitGame = CreateButton(ButtonTypes.Wide, 264, 500, "Exit to Desktop", function()
         abyss.shutdown()
     end)
 
     -- Append all nodes to the scene graph
-    self.mainBg:appendChild(self.lblVersion)
-    self.mainBg:appendChild(self.lblDisclaimer)
-    self.mainBg:appendChild(self.btnSinglePlayer)
-    self.mainBg:appendChild(self.btnLocalNetplay)
-    self.mainBg:appendChild(self.btnExitGame)
-    self.mainBg:appendChild(self.btnCredits)
-    self.mainBg:appendChild(self.btnCinematics)
-    self.mainBg:appendChild(self.btnMapEngineDebug)
-    self.rootNode:appendChild(self.trademarkBg)
-    self.rootNode:appendChild(self.mainBg)
-    self.rootNode:appendChild(self.d2LogoLeftBlackBg)
-    self.rootNode:appendChild(self.d2LogoRightBlackBg)
-    self.rootNode:appendChild(self.d2LogoLeft)
-    self.rootNode:appendChild(self.d2LogoRight)
+    elements.mainBg:appendChild(elements.lblVersion)
+    elements.mainBg:appendChild(elements.lblDisclaimer)
+    elements.mainBg:appendChild(elements.btnSinglePlayer)
+    elements.mainBg:appendChild(elements.btnLocalNetplay)
+    elements.mainBg:appendChild(elements.btnExitGame)
+    elements.mainBg:appendChild(elements.btnCredits)
+    elements.mainBg:appendChild(elements.btnCinematics)
+    elements.mainBg:appendChild(elements.btnMapEngineDebug)
+    elements.rootNode:appendChild(elements.trademarkBg)
+    elements.rootNode:appendChild(elements.mainBg)
+    elements.rootNode:appendChild(elements.d2LogoLeftBlackBg)
+    elements.rootNode:appendChild(elements.d2LogoRightBlackBg)
+    elements.rootNode:appendChild(elements.d2LogoLeft)
+    elements.rootNode:appendChild(elements.d2LogoRight)
 
-    self.rootNode:appendChild(self.cinematicsDialog.window)
+    elements.rootNode:appendChild(elements.cinematicsDialog.window)
 
     --local testLayout = LayoutLoader:load('HUDPanel.json', ResourceDefs.Palette.Sky)
     --local testLayout = LayoutLoader:load('PlayerInventoryExpansionLayout.json', ResourceDefs.Palette.Sky)
@@ -155,23 +166,23 @@ function MainMenu:initialize()
     --local testLayout = LayoutLoader:load('WaypointsPanelOriginal.json', ResourceDefs.Palette.Sky)
     --local testLayout = LayoutLoader:load('WaypointsPanelExpansion.json', ResourceDefs.Palette.Sky)
     --local testLayout = LayoutLoader:load('VendorPanelLayout.json', ResourceDefs.Palette.Sky)
-    --self.testLayout = testLayout
+    --elements.testLayout = testLayout
     --if testLayout then
-    --    self.rootNode:appendChild(testLayout)
+    --    elements.rootNode:appendChild(testLayout)
     --end
 
     if ShowTrademarkScreen == false then
-        self.trademarkBg.active = false
-        self.mainBg.active = true
+        elements.trademarkBg.active = false
+        elements.mainBg.active = true
     else
         ShowTrademarkScreen = false
     end
 end
 
-function MainMenu:createCinematicsWindow(main)
+function MainMenu:createCinematicsWindow()
     local result = {
         window = CreateUniqueSpriteFromFile(ResourceDefs.CinematicsBackground, ResourceDefs.Palette.Sky),
-        main = main,
+        main = self,
         buttons = {}
     }
 
@@ -274,7 +285,7 @@ function MainMenu:createCinematicsWindow(main)
     end
 
     return result
+
 end
-
-
+]]--
 return MainMenu

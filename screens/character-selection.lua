@@ -65,7 +65,7 @@ function CharacterSelection:initialize()
 
     -- exit button to return to main menu
     self.btnExit = CreateButton(ButtonTypes.Medium, 33, 543, "Exit", function()
-        SetScreen(Screen.MAIN_MENU)
+        SetScreen(ScreenType.MAIN_MENU)
     end)
 
     -- Main Background

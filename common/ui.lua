@@ -11,13 +11,7 @@ function InitUI()
         imgCheckbox = imgButtonShortBlank
     end
 
-    TextColor = {
-        --blackHalfOpacity = 0x0000007f
-        LightBrown = { R = 188, G = 168, B = 140 },
-        LightGreen = { R = 24, G = 255, B = 0 },
-        White = { R = 255, G = 255, B = 255 },
-
-    }
+    TextColor = require("common/enum/textcolor")
 
     ButtonTypes = {
         Tall = {
@@ -138,3 +132,14 @@ function CreateUniqueSpriteFromFile(file, palette)
     spr.data.img = img
     return spr
 end
+
+function CreateLabel(font, position, caption, alignment, color)
+    local lbl
+    if not font then abyss.log("error", "attempted to create label with no font"); return end
+    lbl = abyss.createLabel(SystemFonts.FntFormal12)
+    if position ~= nil then lbl:setPosition(position[0], position[1]) end
+    if caption ~= nil then lbl.caption = caption end
+    if alignment ~= nil then lbl:setAlignment(alignment[0], alignment[1]) end
+    return lbl
+end
+
