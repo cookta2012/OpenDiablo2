@@ -1,20 +1,39 @@
 
+--<Erutuon> i.e., this works: local obj = setmetatable({}, { __index = { new = function() end } }); obj:new();
+--<Erutuon> this doesn't: local obj = {__index = { new = function() end } }; obj:new();
+--<cookta2012> I thought I was doing that if you look at the Node prototype
+--<cookta2012> common/prototype/node
+--<cookta2012> Can I not set metatable that way?
+--<cookta2012> So are you saying that the setmetable call must be within the actual class?
+--<cookta2012> And that can't be called off of a super class
+--<Erutuon> trying to understand because I haven't set up very complex object hierarchies in Lua...
+--<cookta2012> Some people would say what I'm doing is stupid but. It's what I got to work with
+--<Erutuon> common/prototypes.node looks like it's not setting the metatable right
+--<Erutuon> actually, it's setting the metatable on the right thing, `this`
+--<Erutuon> but it should have `this:init()` rather than `self:init()`
+--<Erutuon> and the metatable should have an `__index.init = function(self) ... end` field in it
+--<Erutuon> define `metatable.__index.init`, so that when you do `setmetatable(obj, metatable)` you can call `obj:init()` and it'll find the method you defined
+--<Erutuon> at the moment you have `metatable.init` defined
+--<Erutuon> where metatable is Node
+
 
 local MainMenu = {
     __class = "MainMenu",
-    __index = require("common/prototypes/ui"),
-    init = function(self)
-        abyss.log("info", "Hello from " .. self.__class .. " init")
-        self.prototype:init()
-        if abyss.fileExists("/data/hd/global/music/introedit_hd.flac") then
-            abyss.playBackgroundMusic("/data/hd/global/music/introedit_hd.flac")
-        else
-            abyss.playBackgroundMusic(ResourceDefs.BGMTitle)
-        end
-        self.elements.rootNode = abyss.getRootNode()
-        self:addElement("test","tes1")
-        self:getChildren()
-    end
+    __index =   {
+                require("common/prototypes/ui"),
+                init = function(self)
+                    abyss.log("info", "Hello from " .. self.__class .. " init")
+                    self:init()
+                    if abyss.fileExists("/data/hd/global/music/introedit_hd.flac") then
+                        abyss.playBackgroundMusic("/data/hd/global/music/introedit_hd.flac")
+                    else
+                        abyss.playBackgroundMusic(ResourceDefs.BGMTitle)
+                    end
+                    self.elements.rootNode = abyss.getRootNode()
+                    self:addElement("test","tes1")
+                    self:getChildren()
+                end,
+                }
 }
 
 --[[
