@@ -16,25 +16,19 @@
 --<Erutuon> at the moment you have `metatable.init` defined
 --<Erutuon> where metatable is Node
 
+--local UI = require("common/prototypes/ui")
+local MainMenu = {}
+local uiRoot
 
-local MainMenu = {
-    __class = "MainMenu",
-    __index =   {
-                require("common/prototypes/ui"),
-                init = function(self)
-                    abyss.log("info", "Hello from " .. self.__class .. " init")
-                    self:init()
-                    if abyss.fileExists("/data/hd/global/music/introedit_hd.flac") then
-                        abyss.playBackgroundMusic("/data/hd/global/music/introedit_hd.flac")
-                    else
-                        abyss.playBackgroundMusic(ResourceDefs.BGMTitle)
-                    end
-                    self.elements.rootNode = abyss.getRootNode()
-                    self:addElement("test","tes1")
-                    self:getChildren()
-                end,
-                }
-}
+function MainMenu:new()
+    if abyss.fileExists("/data/hd/global/music/introedit_hd.flac") then
+        abyss.playBackgroundMusic("/data/hd/global/music/introedit_hd.flac")
+    else
+        abyss.playBackgroundMusic(ResourceDefs.BGMTitle)
+    end
+    --uiRoot = UI.new()
+    --abyss.log("info",dump(uiRoot:new()))
+end
 
 --[[
 function MainMenu:init()
